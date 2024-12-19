@@ -1,13 +1,24 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0; 
-    background-color: #d2d2ff;
+    padding: 0;
+    background-color: #f9f9f9;
     color: #333;
 }
 
-/* Section styling */
-section {
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #007BFF;
+    color: white;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+main {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
@@ -16,20 +27,27 @@ section {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Form styling */
-.form_task {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.task-form,
+.task-list {
+    margin-bottom: 30px;
 }
 
-.Input_class label {
+h2 {
+    margin-bottom: 15px;
+    color: #007BFF;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
     font-weight: bold;
     margin-bottom: 5px;
-    display: inline-block;
+    display: block;
 }
 
-.Input_class input {
+input[type="text"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -52,46 +70,24 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Task card styling */
-.task {
-    margin-top: 30px;
-}
-
-.new_task {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.task-item {
     padding: 15px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 10px;
-    transition: box-shadow 0.3s ease;
-}
-
-.new_task:hover {
+    margin-bottom: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.paragraph_names {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.task-details {
+    margin-bottom: 10px;
 }
 
-.paragraph_names p:first-child {
-    font-weight: bold;
-}
-
-.Task_names,
-.Theme {
-    color: #555;
-    font-style: italic;
-}
-
-label {
-    font-weight: bold;
-}
-
-input[type="checkbox"] {
-    margin-left: 10px;
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    margin-top: 20px;
+    border-radius: 0 0 10px 10px;
 }
