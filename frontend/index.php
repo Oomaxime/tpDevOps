@@ -1,57 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notre liste</title>
+    <title>Gestionnaire de Tâches</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <section>
-        <form class="form_task" method="post" action="../backend/process.php">
-            <div class="Input_class">
-                <label for="Name">Name :</label>
-                <input name="name" id="Name" type="text" placeholder="Name of task" required>
-            </div>
-            <div class="Input_class">
-                <label for="Theme">Theme :</label>
-                <input name="theme" id="Theme" type="text" placeholder="Theme of task" required>
-            </div>
-            <button>Crée ici une tache</button>
-        </form>
-    </section>
-
-    <section class="task">
-    <?php
-    require_once '../backend/config.php';
-
-        $stmt = $pdo->query("SELECT * FROM todolist");
-        $tasks = $stmt->fetchAll();
-
-        foreach ($tasks as $task) {
-            ?>
-            <div class="new_task">
-                <div class="paragraph_names">
-                    <p>Name Task :</p>
-                    <p class="Task_names"><?= htmlspecialchars($task['task']) ?></p>
+    <header>
+        <h1>Bienvenue dans le Gestionnaire de Tâches</h1>
+        <p>Organisez et gérez vos tâches efficacement.</p>
+    </header>
+    <main>
+        <section class="task-form">
+            <h2>Créer une Nouvelle Tâche</h2>
+            <form method="post" action="">
+                <div class="form-group">
+                    <label for="Name">Nom de la Tâche :</label>
+                    <input id="Name" name="task_name" type="text" placeholder="Saisissez le nom de la tâche" required>
                 </div>
-                <div class="paragraph_names">
-                    <p>Theme :</p>
-                    <p class="Theme"><?= htmlspecialchars($task['theme']) ?></p>
+                <div class="form-group">
+                    <label for="Theme">Thème de la Tâche :</label>
+                    <input id="Theme" name="task_theme" type="text" placeholder="Saisissez le thème de la tâche" required>
                 </div>
-                <div>
-                    <label for="validate_<?= htmlspecialchars($task['id']) ?>">Validé / non-validé</label>
-                    <input 
-                        id="validate_<?= htmlspecialchars($task['id']) ?>" 
-                        type="checkbox" 
-                        <?= $task['state'] ? 'checked' : '' ?>
-                    >
-                </div>
-            </div>
+                <button type="submit">Créer la Tâche</button>
+            </form>
+        </section>
+        <section class="task-list">
+            <h2>Vos Tâches</h2>
             <?php
-        }
-        ?>
-    </section>
+            require_once '../backend/config.php';
+
+            try {
+                $stmt = $pdo->query("SELECT * FROM todolist");
+                $tasks = $stmt->fetchAll();
+
+                if ($tasks) {
+                    foreach ($tasks as $task) {
+                        ?>
+                        <div class="task-item">
+                            <div class="task-details">
+                                <p><strong>Nom de la Tâche :</strong> <?= htmlspecialchars($task['task']) ?></p>
+                                <p><strong>Thème :</strong> <?= htmlspecialchars($task['theme']) ?></p>
+                            </div>
+                            <div class="task-status">
+                                <label for="validate_<?= htmlspecialchars($task['id']) ?>">Terminée :</label>
+                                <input 
+                                    id="validate_<?= htmlspecialchars($task['id']) ?>" 
+                                    type="checkbox" 
+                                    <?= $task['state'] ? 'checked' : '' ?> 
+                                    disabled>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                } else {
+                    echo "<p>Aucune tâche trouvée. Créez une nouvelle tâche pour commencer !</p>";
+                }
+            } catch (PDOException $e) {
+                echo "<p>Erreur lors de la récupération des tâches : " . htmlspecialchars($e->getMessage()) . "</p>";
+            }
+            ?>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; <?= date('Y') ?> Gestionnaire de Tâches. Tous droits réservés.</p>
+    </footer>
 </body>
 </html>
 
