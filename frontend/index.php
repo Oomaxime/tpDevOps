@@ -22,28 +22,27 @@
     </section>
 
     <section class="task">
-        <?php
-        $tasks = [
-            ['name' => 'Faire les dockersFiles', 'theme' => 'Boulot', 'state' => true],
-            ['name' => 'Préparer la réunion', 'theme' => 'Travail', 'state' => false],
-            ['name' => 'Planifier le projet', 'theme' => 'Équipe', 'state' => true],
-        ];
+    <?php
+    require_once '../backend/config.php';
+
+        $stmt = $pdo->query("SELECT * FROM todolist");
+        $tasks = $stmt->fetchAll();
 
         foreach ($tasks as $task) {
             ?>
             <div class="new_task">
                 <div class="paragraph_names">
                     <p>Name Task :</p>
-                    <p class="Task_names"><?= htmlspecialchars($task['name']) ?></p>
+                    <p class="Task_names"><?= htmlspecialchars($task['task']) ?></p>
                 </div>
                 <div class="paragraph_names">
                     <p>Theme :</p>
                     <p class="Theme"><?= htmlspecialchars($task['theme']) ?></p>
                 </div>
                 <div>
-                    <label for="validate_<?= htmlspecialchars($task['name']) ?>">Validé / non-validé</label>
+                    <label for="validate_<?= htmlspecialchars($task['id']) ?>">Validé / non-validé</label>
                     <input 
-                        id="validate_<?= htmlspecialchars($task['name']) ?>" 
+                        id="validate_<?= htmlspecialchars($task['id']) ?>" 
                         type="checkbox" 
                         <?= $task['state'] ? 'checked' : '' ?>
                     >
