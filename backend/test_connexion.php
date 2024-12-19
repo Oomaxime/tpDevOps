@@ -1,9 +1,9 @@
 <?php
 // Informations de connexion
-$host = 'localhost';        // Hôte PostgreSQL (peut être localhost ou l'adresse IP)
-$dbname = 'todolist';       // Nom de la base de données
-$user = 'postgres';         // Nom d'utilisateur PostgreSQL
-$password = 'postgres'; // Mot de passe PostgreSQL
+$host = getenv('DB_HOST') ?: 'localhost';
+$dbname = getenv('DB_NAME') ?: 'todolist';
+$user = getenv('DB_USER') ?: 'postgres';
+$password = getenv('DB_PASSWORD') ?: 'postgres';
 
 try {
     // Tentative de connexion
