@@ -46,9 +46,29 @@ jobs:
   
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
+      
+    - name: Initialize test database
+      run: |
+        psql -h localhost -U postgres -d ${{secrets.DB_NAME}} -f docker/postgres/init.sql
+      env:
+        PGPASSWORD: ${{ secrets.DB_PASS}}
+
+    - name: Verify database connection
+      run: |
+        php -r "
+          \$dbh = new PDO('pgsql:host=localhost;dbname=todo_db', 'postgres', '${{secrets.DB_PASS}}');
+          echo 'Database connection successful\n';
+          \$result = \$dbh->query('SELECT COUNT(*) FROM tasks');
+          echo 'Number of tasks: ' . \$result->fetchColumn();
+        "    
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
       run: composer run-script test
+      env:
+          DB_HOST: localhost
+          DB_NAME: ${{secrets.DB_NAME}}
+          DB_USER: ${{secrets.BD_USERNAME}}
+          DB_PASSWORD: ${{secrets.BD_PASS}}
