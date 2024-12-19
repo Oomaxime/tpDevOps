@@ -11,11 +11,11 @@
     <form class="form_task" method="post" action="../backend/process.php">
         <div class="Input_class">
             <label for="Name">Names :</label>
-            <input id="Name" name="name" type="text" placeholder="Name of task">
+            <input name="name" id="Name" type="text" placeholder="Name of task">
         </div>
         <div class="Input_class">
             <label for="Theme">Theme :</label>
-            <input id="Theme" name="theme" type="text" placeholder="Theme of task">
+            <input name="theme" id="Theme" type="text" placeholder="Theme of task">
         </div>
         <button>Create Task</button>
     </form>
