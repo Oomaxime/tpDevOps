@@ -14,7 +14,7 @@ jobs:
         env:
           POSTGRES_DB: todo_db
           POSTGRES_USER: secrets.BD_USERNAME
-          POSTGRES_PASSWORD:
+          POSTGRES_PASSWORD: secrets.BD_PASS
         ports:
           - 5432:5432
         options: >-
