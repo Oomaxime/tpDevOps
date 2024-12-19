@@ -1,5 +1,5 @@
 <?php
-require_once '../backend/config.php';
+require_once __DIR__ . '/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $task = htmlspecialchars($_POST['name'] ?? '');

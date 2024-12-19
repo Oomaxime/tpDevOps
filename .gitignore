@@ -1,1 +1,5 @@
 /frontend/test_connexion.php
+/vendor
+/composer.json
+/composer.lock
+/tests/FunctionalTest.php

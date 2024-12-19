@@ -8,14 +8,14 @@
 </head>
 <body>
     <section>
-        <form class="form_task" method="post" action="">
+        <form class="form_task" method="post" action="../backend/process.php">
             <div class="Input_class">
-                <label for="Name">Names :</label>
-                <input id="Name" type="text" placeholder="Name of task">
+                <label for="Name">Name :</label>
+                <input name="name" id="Name" type="text" placeholder="Name of task" required>
             </div>
             <div class="Input_class">
-                <label for="Theme"> :</label>
-                <input id="Theme" type="text" placeholder="Theme of task">
+                <label for="Theme">Theme :</label>
+                <input name="theme" id="Theme" type="text" placeholder="Theme of task" required>
             </div>
             <button>Crée ici une tache</button>
         </form>
