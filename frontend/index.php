@@ -8,18 +8,19 @@
 </head>
 <body>
 <section>
-    <form class="form_task" method="post" action="">
+    <form class="form_task" method="post" action="../backend/process.php">
         <div class="Input_class">
             <label for="Name">Names :</label>
-            <input id="Name" type="text" placeholder="Name of task">
+            <input id="Name" name="name" type="text" placeholder="Name of task">
         </div>
         <div class="Input_class">
             <label for="Theme">Theme :</label>
-            <input id="Theme" type="text" placeholder="Theme of task">
+            <input id="Theme" name="theme" type="text" placeholder="Theme of task">
         </div>
         <button>Create Task</button>
     </form>
 </section>
+
 <section class="task">
     <div class="new_task">
         <div class="paragraph_names">
