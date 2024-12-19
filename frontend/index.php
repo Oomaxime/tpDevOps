@@ -15,7 +15,7 @@
         </div>
         <div class="Input_class">
             <label for="Theme">Theme :</label>
-            <input name="Theme" id="Theme" type="text" placeholder="Theme of task">
+            <input name="theme" id="Theme" type="text" placeholder="Theme of task">
         </div>
         <button>Create Task</button>
     </form>
