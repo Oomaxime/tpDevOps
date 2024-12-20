@@ -21,5 +21,10 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops:latest
-    
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
+          build-args: |
+            DB_HOST=db
+            DB_NAME=todolist
+            DB_USER=postgres
+            DB_PASSWORD=postgres
