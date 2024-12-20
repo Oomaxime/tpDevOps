@@ -28,7 +28,6 @@ jobs:
       uses: nanasess/setup-php@v4.1.0
       with:
         php-version: '8.2'
-        extensions: pdo, pdo_pgsql
     
     - name: Initialize database
       run: |
