@@ -14,14 +14,14 @@
     <main>
         <section class="task-form">
             <h2>Créer une Nouvelle Tâche</h2>
-            <form method="post" action="">
+            <form method="post" action="../backend/process.php">
                 <div class="form-group">
                     <label for="Name">Nom de la Tâche :</label>
-                    <input id="Name" name="task_name" type="text" placeholder="Saisissez le nom de la tâche" required>
+                    <input id="Name" name="name" type="text" placeholder="Saisissez le nom de la tâche" required>
                 </div>
                 <div class="form-group">
                     <label for="Theme">Thème de la Tâche :</label>
-                    <input id="Theme" name="task_theme" type="text" placeholder="Saisissez le thème de la tâche" required>
+                    <input id="Theme" name="theme" type="text" placeholder="Saisissez le thème de la tâche" required>
                 </div>
                 <button type="submit">Créer la Tâche</button>
             </form>
