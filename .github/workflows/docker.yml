@@ -8,7 +8,8 @@ on:
 
 jobs:
   on-success:
-      runs-on: ubuntu-latest    
+      runs-on: ubuntu-latest
+      if: ${{ github.event.workflow_run.conclusion == 'success' }}
       steps:
       - uses: actions/checkout@v4
       - name: Extract Docker image metadata
@@ -30,4 +31,5 @@ jobs:
             file: ./Dockerfile
             push: true
             tags: ${{ secrets.DOCKER_USERNAME }}/tpdevops-web:latest
+            
       
