@@ -45,7 +45,7 @@ jobs:
     - name: Verify database connection
       run: |
         php -r "
-          \$dbh = new PDO('pgsql:host=localhost;dbname='${{secrets.DB_NAME}}', '${{secrets.DB_USERNAME}}', '${{secrets.DB_PASS}}');
+          \$dbh = new PDO('pgsql:host=localhost;dbname='${{secrets.DB_NAME}}', '${{secrets.DB_USERNAME}}', '${{secrets.DB_PASS}}'');
           echo 'Database connection successful\n';
           \$result = \$dbh->query('SELECT COUNT(*) FROM ${{secrets.DB_NAME}}');
           echo 'Number of tasks: ' . \$result->fetchColumn();
