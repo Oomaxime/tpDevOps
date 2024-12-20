@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':task' => $task,
                 ':theme' => $theme,
             ]);
-            
+            echo "Tâche ajoutée avec succès";
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();
         }
