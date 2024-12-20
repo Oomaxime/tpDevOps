@@ -14,23 +14,52 @@
     <main>
         <section class="task-form">
             <h2>Créer une Nouvelle Tâche</h2>
-            <form method="post" action="../backend/process.php">
+            <form method="post" action="">
                 <div class="form-group">
                     <label for="Name">Nom de la Tâche :</label>
-                    <input id="Name" name="name" type="text" placeholder="Saisissez le nom de la tâche" required>
+                    <input id="Name" name="task_name" type="text" placeholder="Saisissez le nom de la tâche" required>
                 </div>
                 <div class="form-group">
                     <label for="Theme">Thème de la Tâche :</label>
-                    <input id="Theme" name="theme" type="text" placeholder="Saisissez le thème de la tâche" required>
+                    <input id="Theme" name="task_theme" type="text" placeholder="Saisissez le thème de la tâche" required>
                 </div>
                 <button type="submit">Créer la Tâche</button>
             </form>
         </section>
+        
+        <?php
+require_once __DIR__ . '/../backend/config.php'; 
+        try {
+            $stmt = $pdo->query("SHOW TABLES LIKE 'todolist'");
+            if ($stmt->rowCount() == 0) {
+                echo "<p>La table 'todolist' n'existe pas. Assurez-vous qu'elle existe dans la base de données.</p>";
+            }
+        } catch (PDOException $e) {
+            echo "<p>Erreur lors de la vérification de l'existence de la table : " . htmlspecialchars($e->getMessage()) . "</p>";
+        }
+
+      
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['task_name']) && isset($_POST['task_theme'])) {
+                $taskName = $_POST['task_name'];
+                $taskTheme = $_POST['task_theme'];
+
+                try {
+                    $stmt = $pdo->prepare("INSERT INTO todolist (task, theme) VALUES (:task_name, :task_theme)");
+                    $stmt->bindParam(':task_name', $taskName);
+                    $stmt->bindParam(':task_theme', $taskTheme);
+                    $stmt->execute();
+                    echo "<p>La tâche a été ajoutée avec succès !</p>";
+                } catch (PDOException $e) {
+                    echo "<p>Erreur lors de l'ajout de la tâche : " . htmlspecialchars($e->getMessage()) . "</p>";
+                }
+            }
+        }
+        ?>
+
         <section class="task-list">
             <h2>Vos Tâches</h2>
             <?php
-            require_once '../backend/config.php';
-
             try {
                 $stmt = $pdo->query("SELECT * FROM todolist");
                 $tasks = $stmt->fetchAll();
@@ -68,4 +97,3 @@
     </footer>
 </body>
 </html>
-
