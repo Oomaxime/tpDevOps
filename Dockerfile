@@ -6,12 +6,14 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
+# Copy the entire application
+COPY . /var/www/html/
 
-COPY ./frontend/ /var/www/html/frontend
-COPY ./backend/ /var/www/html/backend
-
+# Set proper permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
+# Move .htaccess to the correct location
+RUN mv /var/www/html/frontend/.htaccess /var/www/html/.htaccess
 
 EXPOSE 80

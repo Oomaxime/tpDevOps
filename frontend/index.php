@@ -30,8 +30,12 @@
         <?php
 require_once __DIR__ . '/../backend/config.php'; 
         try {
-            $stmt = $pdo->query("SHOW TABLES LIKE 'todolist'");
-            if ($stmt->rowCount() == 0) {
+            $stmt = $pdo->query("SELECT EXISTS (
+                SELECT FROM information_schema.tables 
+                WHERE table_schema = 'public' 
+                AND table_name = 'todolist'
+            )");
+            if ($stmt->fetchColumn() == 0) {
                 echo "<p>La table 'todolist' n'existe pas. Assurez-vous qu'elle existe dans la base de données.</p>";
             }
         } catch (PDOException $e) {
