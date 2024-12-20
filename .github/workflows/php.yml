@@ -38,7 +38,7 @@ jobs:
       
     - name: Initialize test database
       run: |
-        psql -h localhost -U postgres -d ${{secrets.DB_NAME}} -f docker/postgres/init.sql
+        psql -h localhost -U postgres -d ${{secrets.DB_NAME}} -f db/init.sql
       env:
         PGPASSWORD: ${{ secrets.DB_PASS}}
 
