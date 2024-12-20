@@ -32,7 +32,7 @@ jobs:
     
     - name: Initialize database
       run: |
-        psql -h localhost -U postgres -d todolist -f db/init.sql
+        psql -h localhost -U ${{secrets.DB_USERNAME}} -d ${{secrets.DB_NAME}} -f db/init.sql
       env:
         PGPASSWORD: postgres
       
@@ -45,9 +45,9 @@ jobs:
     - name: Verify database connection
       run: |
         php -r "
-          \$dbh = new PDO('pgsql:host=localhost;dbname=todo_db', 'postgres', '${{secrets.DB_PASS}}');
+          \$dbh = new PDO('pgsql:host=localhost;dbname='${{secrets.DB_NAME}}', '${{secrets.DB_USERNAME}}', '${{secrets.DB_PASS}}');
           echo 'Database connection successful\n';
-          \$result = \$dbh->query('SELECT COUNT(*) FROM todolist');
+          \$result = \$dbh->query('SELECT COUNT(*) FROM ${{secrets.DB_NAME}}');
           echo 'Number of tasks: ' . \$result->fetchColumn();
         "
     
