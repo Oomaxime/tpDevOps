@@ -1,3 +1,6 @@
+#  https://github.com/Oomaxime/tpDevOps
+
+
 name: PHP Composer
 
 on:
@@ -5,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres:latest
@@ -34,7 +35,6 @@ jobs:
     
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
-
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -60,11 +60,9 @@ jobs:
           echo 'Database connection successful\n';
           \$result = \$dbh->query('SELECT COUNT(*) FROM tasks');
           echo 'Number of tasks: ' . \$result->fetchColumn();
-        "    
-
+        "
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
-
     - name: Run test suite
       run: composer run-script test
       env:
@@ -72,3 +70,13 @@ jobs:
           DB_NAME: ${{secrets.DB_NAME}}
           DB_USER: ${{secrets.BD_USERNAME}}
           DB_PASSWORD: ${{secrets.BD_PASS}}
+
+      # Run PHPUnit tests
+    - name: Run PHPUnit tests
+      run: composer run-script test
+      env:
+        DB_CONNECTION: pgsql
+        DB_HOST: localhost
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_USER: ${{ secrets.BD_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASS }}
