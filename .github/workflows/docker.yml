@@ -27,9 +27,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          annotations: ${{ steps.meta.outputs.annotations }}
-          provenance: true
-          sbom: true
           build-args: |
             DB_HOST=db
             DB_NAME=todolist
