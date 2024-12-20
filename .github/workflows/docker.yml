@@ -1,3 +1,5 @@
+name: Docker Build and Push
+
 on:
   workflow_dispatch:
 
@@ -5,18 +7,19 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest    
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       
     - name: Login to DockerHub
-      uses: docker/login-action@v1
+      uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push Docker images
-      uses: docker/build-push-action@v6.10.0
+      uses: docker/build-push-action@v5
       with:
           context: .
-          file: /Dokerfiles
+          file: ./Dockerfile
           push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops:latest
     
