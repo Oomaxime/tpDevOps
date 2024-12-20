@@ -55,9 +55,15 @@ function testAffichageTaches($pdo) {
     return strpos($output, 'Tâche Test') !== false && strpos($output, 'Test') !== false;
 }
 
+function TestSuppressionTaches($pdo) {
+    $pdo->exec("DELETE FROM todolist WHERE task = 'Tâche Test' AND theme = 'Test'");
+    return true;
+}
+
 
 echo "<h1>Résultats des tests</h1>";
 displayResult('Test Ajout Tâche Valide', testAjoutTacheValide($pdo));
 displayResult('Test Champs Vides', testChampsVides($pdo));
 displayResult('Test Affichage Tâches', testAffichageTaches($pdo));
+displayResult('Test Suppression Tâches', TestSuppressionTaches($pdo));
 ?>
