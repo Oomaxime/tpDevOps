@@ -1,6 +1,3 @@
-#  https://github.com/Oomaxime/tpDevOps
-
-
 name: PHP Composer
 
 on:
@@ -13,9 +10,9 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: ${{secrets.DB_NAME}}
-          POSTGRES_USER: ${{secrets.BD_USERNAME}}
-          POSTGRES_PASSWORD: ${{secrets.BD_PASS}}
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASS }}
         ports:
           - 5432:5432
         options: >-
@@ -27,25 +24,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # https://github.com/marketplace/actions/setup-php-environment
     - name: Setup PHP environment
       uses: nanasess/setup-php@v4.1.0
       with:
         php-version: '8.2'
+        extensions: pdo, pdo_pgsql
     
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-  
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+    - name: Initialize database
+      run: |
+        psql -h localhost -U postgres -d todolist -f db/init.sql
+      env:
+        PGPASSWORD: postgres
       
     - name: Initialize test database
       run: |
@@ -61,22 +50,20 @@ jobs:
           \$result = \$dbh->query('SELECT COUNT(*) FROM todolist');
           echo 'Number of tasks: ' . \$result->fetchColumn();
         "
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-    - name: Run test suite
-      run: composer run-script test
+    
+    - name: Verify database connection
+      run: php backend/test_connexion.php
       env:
-          DB_HOST: localhost
-          DB_NAME: ${{secrets.DB_NAME}}
-          DB_USER: ${{secrets.BD_USERNAME}}
-          DB_PASSWORD: ${{secrets.BD_PASS}}
+        DB_HOST: localhost
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_USER: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASS }}
 
-      # Run PHPUnit tests
-    - name: Run PHPUnit tests
-      run: composer run-script test
+    - name: Run test suite
+      run: php tests/test.php
       env:
         DB_CONNECTION: pgsql
         DB_HOST: localhost
         DB_NAME: ${{ secrets.DB_NAME }}
-        DB_USER: ${{ secrets.BD_USERNAME }}
+        DB_USER: ${{ secrets.DB_USERNAME }}
         DB_PASSWORD: ${{ secrets.DB_PASS }}
