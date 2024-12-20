@@ -27,8 +27,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: 'latest'
-          build-args: |
-            DB_HOST=db
-            DB_NAME=todolist
-            DB_USER=postgres
-            DB_PASSWORD=postgres
