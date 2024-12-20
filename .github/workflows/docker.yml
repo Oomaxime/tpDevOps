@@ -22,7 +22,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/tpdevops-web:latest
           build-args: |
             DB_HOST=db
             DB_NAME=todolist
